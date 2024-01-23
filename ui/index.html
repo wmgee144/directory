@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Building Companies</title>
+ <style>
+ /* Add any additional styling here */
+ body {
+ font-family: Arial, sans-serif;
+ margin: 20px;
+ display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+ }
+
+ .company {
+ border: 1px solid #ccc;
+ padding: 10px;
+ height: 100%;
+ box-sizing: border-box;
+ }
+
+ .resident {
+ border-top: 1px dashed #ccc;
+ padding-top: 10px;
+ margin-top: 10px;
+ }
+ </style>
+</head>
+<body>
+
+<script>
+ // Example JSON data
+ var buildingData = {
+ "companies": [
+ {
+ "id": 1,
+ "companyName": "Harbor Entrepreneur Center",
+ "companyLogo": "https://harborec.com/wp-content/uploads/2022/03/harborlogo.png",
+ "wing": "data wing",
+ "rooms": [
+ {"roomNumber": 105,
+ "firstName": "Kim",
+ "lastName": "McManus",
+ "email": "kim@harborec.com"
+ },
+ {
+ "roomNumber": 202,
+ "firstName": "Grady",
+ "lastName": "Johnson",
+ "email": "grady@harborec.com"
+ }
+ ]
+ },
+ {
+ "id": 2,
+ "companyName": "EO Charleston",
+ "companyLogo": "https://images.squarespace-cdn.com/content/v1/5d38d96fc4624a0001f8294a/57ecdaec-c20f-4a05-b3b7-61a715827f9d/EO_Charleston_RGB_stacked.png?format=1500w",
+ "wing": "data wing",
+ "rooms": [
+ {
+ "roomNumber": 106,
+ "firstName": "Matt",
+ "lastName": "Sullivan",
+ "email": "matt@bescleaning.com"
+ }
+ ]
+ },
+ {
+ "id": 3,
+ "companyName": "MALbeacon",
+ "companyLogo": "https://static1.squarespace.com/static/603ead10cb4d9a7a8b37b8a6/t/604527aa9da4635567e9ccb7/1622901868755/",
+ "wing": "data wing",
+ "rooms": [
+ {
+ "roomNumber": 107,
+ "firstName": "Paul",
+ "lastName": "Burbage",
+ "email": "paul.k.burbage@gmail.com"}
+ ]
+ 
+ },
+ {
+ "id": 4,
+ "companyName": "Entrepreneurial Operating System",
+ "companyLogo": "https://www.eosworldwide.com/wp-content/uploads/2021/05/EOS-logo.png",
+ "wing": "data wing",
+ "rooms": [
+ {"roomNumber": 108,
+ "firstName": "Marc",
+ "lastName": "Cotone",
+ "email": "marc.cotone@eosworldwide.com"
+ }
+ ]
+ },
+ {
+ "id": 5,
+ "companyName": "Advyon",
+ "companyLogo": "https://advyon.com/wp-content/uploads/2023/06/logo-2.webp",
+ "wing": "data wing",
+ "rooms": [
+ {
+ "roomNumber": 111,
+ "firstName": "Brian",
+ "lastName": "Anderson",
+ "email": "banderson@advyon.com"
+ },
+ {
+ "roomNumber": 112,
+ "firstName": "Open",
+ "lastName": "Open",
+ "email": "Open"
+ }
+ ]
+ },
+ {
+ "id": 6,
+ "companyName": "Cohesion Culture",
+ "companyLogo": "https://media.licdn.com/dms/image/D560BAQEt71g9_-LLMw/company-logo_100_100/0/1689884193305?e=2147483647&v=beta&t=5FJ_2POvHqJHritW49gzHII3odJP26Vhgf1N5MlRCi0",
+ "wing": "data wing",
+ "rooms":[
+ {
+ "roomNumber": 113,
+ "firstName": "Ben",
+ "lastName": "Toy",
+ "email": "ben@onpurposeadventures.com"
+ }
+ ]
+ },
+ {
+ "id": 7,
+ "companyName": "Efferent Labs",
+ "companyLogo": "https://www.efferentlabs.com/wp-content/uploads/2020/03/IMG_049w9.png",
+ "wing": "data wing",
+ "rooms": [
+ {
+ "roomNumber": 114,
+ "firstName": "Bill",
+ "lastName": "Rader",
+ "email": "brader@efferentlabs.com"
+ }
+ ]
+ },
+ {
+ "id": 8,
+ "companyName": "Heirloom Cloud",
+ "companyLogo": "https://assets-global.website-files.com/621f7cd16d05990c27c9a26c/621f7cd16d05996433c9a2bd_HeirloomCloud_Logo_Icon_Colored.png",
+ "wing": "data wing",
+ "rooms": [
+ {
+ "roomNumber": 115,
+ "firstName": "Geoof",
+ "lastName": "Weber",
+ "email": "geoff.weber@heirloom.cloud"
+ }
+ ]
+ },
+ {
+ "id": 9,
+ "companyName": "Novus Proximus",
+ "companyLogo": "https://novusproximus.com/wp-content/uploads/2023/03/novus-proximus-icon.png",
+ "wing": "data wing",
+ "rooms":[
+ {
+ "roomNumber": 116,
+ "firstName": "Patrick",
+ "lastName": "Coyle",
+ "email": "pcoyle@novusproximus.com"
+ }
+ ]
+ },
+ {
+ "id": 10,
+ "companyName": "Food Solutions Group",
+ "companyLogo": "https://static.wixstatic.com/media/fd248f_fe5066be45ff4c4d914db5e83ef60812~mv2.png/v1/fill/w_1280,h_720,al_c/fd248f_fe5066be45ff4c4d914db5e83ef60812~mv2.png",
+ "wing": "data wing",
+ "rooms":[
+ {
+ "roomNumber": 131,
+ "firstName": "Haig",
+ "lastName": "Berbarian",
+ "email": "haigb@foodsolutionsgroup.com"
+ }
+ ]
+ },
+ {
+ "id": 11,
+ "companyName": "Dig South",
+ "companyLogo": "https://media.licdn.com/dms/image/C4E0BAQEY_YA2naZNDQ/company-logo_200_200/0/1673890705084/digsouth_logo?e=2147483647&v=beta&t=rhIZmM7oLFGz8AdV24Npjpzp4Sdkv6FyYrCJ96cMDuM",
+ "wing": "data wing",
+ "rooms":[
+ {
+ "roomNumber": 203,
+ "firstName": "Stan",
+ "lastName": "Gray",
+ "email": "stanfield@digsouth.com"
+ }
+ ]
+ },
+ {
+ "id": 12,
+ "companyName": "Trio Solutions",
+ "companyLogo": "https://images.crunchbase.com/image/upload/c_lpad,h_170,w_170,f_auto,b_white,q_auto:eco,dpr_1/rxyp3egv5sgafw59a5ey",
+ "wing": "data wing",
+ "rooms":[
+ {
+ "roomNumber": 204,
+ "firstName": "Jessica",
+ "lastName": "Munday",
+ "email": "jessica@trio-solutions.com"
+ },
+ {
+ "roomNumber": 205,
+ "firstName": "Open",
+ "lastName": "Open",
+ "email": "Open"
+ },{
+ "roomNumber": 206,
+ "firstName": "Open",
+ "lastName": "Open",
+ "email": "Open"
+ },{
+ "roomNumber": 207,
+ "firstName": "Open",
+ "lastName": "Open",
+ "email": "Open"
+ },{
+ "roomNumber": 208,
+ "firstName": "Open",
+ "lastName": "Open",
+ "email": "Open"
+ },{
+ "roomNumber": 209,
+ "firstName": "Open",
+ "lastName": "Open",
+ "email": "Open"
+ },{
+ "roomNumber": 210,
+ "firstName": "Open",
+ "lastName": "Open",
+ "email": "Open"
+ },{
+ "roomNumber": 211,
+ "firstName": "Open",
+ "lastName": "Open",
+ "email": "Open"
+ }
+ 
+ ]
+ },
+ {
+ "id": 13,
+ "companyName": "Echovate",
+ "companyLogo": "https://pbs.twimg.com/profile_images/1154789019294871552/yJdDCkzP_400x400.jpg",
+ "wing": "data wing",
+ "rooms":[
+ {
+ "roomNumber": 212,
+ "firstName": "Matt",
+ "lastName": "Gough",
+ "email": "mg@echovate.com"
+ }
+ ]
+ },
+ {
+ "id": 14,
+ "companyName": "BRAETR",
+ "companyLogo": "https://uploads-ssl.webflow.com/6455238e038cbb7969e8eab7/646560aab13fa1dc3549202a_BRAETR%20CONSTRUCTION%20Logo-PhotoRoom.png-PhotoRoom.png",
+ "wing": "data wing",
+ "rooms":[
+ {
+ "roomNumber": 213,
+ "firstName": "Eric",
+ "lastName": "Bowman",
+ "email": "eric@braetr.com"
+ }
+ ]
+ },
+ {
+ "id": 15,
+ "companyName": "Code+Trust & Event.gives",
+ "companyLogo": "https://media.licdn.com/dms/image/C4E22AQH-3zt2gBcIbA/feedshare-shrink_800/0/1659578387471?e=2147483647&v=beta&t=KbOR1oJ0_2Q-DaLLcdxzH0snDPlskWKLWFBJMXx2f9o",
+ "wing": "data wing",
+ "rooms":[
+ {
+ "roomNumber": 214,
+ "firstName": "Andrew",
+ "lastName": "Strickland",
+ "email": "andrew@codeandtrust.com"
+ },
+ {"roomNumber": 215,
+ "firstName": "Sam",
+ "lastName": "Staley",
+ "email": "sam@event.gives"},
+ {
+ "roomNumber": 216,
+ "firstName": "Open",
+ "lastName": "Open",
+ "email": "Open"
+ },
+ {
+ "roomNumber": "Dev Floor",
+ "firstName": "Open",
+ "lastName": "Open",
+ "email": "Open"
+ }
+ ]
+ },
+ {
+ "id": 16,
+ "companyName": "Fullfill Engine",
+ "companyLogo": "https://wp-stahlsblog.s3.amazonaws.com/wp-content/uploads/test1-1.png",
+ "wing": "data wing",
+ "rooms":[
+ {
+ "roomNumber": 219,
+ "firstName": "Jayson",
+ "lastName": "Tomkins",
+ "email": "jayson@fulfillengine.com"
+ }
+ ]
+ },
+ {
+ "id": 17,
+ "companyName": "Drink Brand Partners",
+ "companyLogo": "https://static.wixstatic.com/media/41fd0a_31a5763ff4354b76bd3b058534e8f34a~mv2.png/v1/fill/w_740,h_254,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Drink%20Logo%20REV.png",
+ "wing": "data wing",
+ "rooms":[
+ {
+ "roomNumber": 220,
+ "firstName": "Matt",
+ "lastName": "McKoewn",
+ "email": "matt@drinkbrandpartners.com"
+ }
+ ]
+ },
+ {
+ "id": 18,
+ "companyName": "Chuck Powell",
+ "companyLogo": "https://coursereport-s3-production.global.ssl.fastly.net/uploads/school/logo/402/original/jrs-coding-school-logo.jpg",
+ "wing": "data wing",
+ "rooms":[
+ {
+ "roomNumber": 221,
+ "firstName": "Chuck",
+ "lastName": "Powell",
+ "email": "charles.f.powell@gmail.com"
+ }
+ ]
+ },
+ {
+ "id": 19,
+ "companyName": "Sod Solutions",
+ "companyLogo": "https://sodsolutions.com/wp-content/uploads/2020/03/Sod-Solutions-Logo.png",
+ "wing": "data wing",
+ "rooms":[
+ {
+ "roomNumber": 222,
+ "firstName": "Addison",
+ "lastName": "King",
+ "email": "aking@sodsolutions.com"
+ }
+ ]
+ },
+ {
+ "id": 20,
+ "companyName": "Pollen",
+ "companyLogo": "https://media.licdn.com/dms/image/C560BAQFod2Nt9piOww/company-logo_200_200/0/1676823877406/pollen8beeverywhere_logo?e=1706745600&v=beta&t=hJRtl8A-yG3H1HWUdjwOhbiphEIcGts30RvrcNMwTnk",
+ "wing": "data wing",
+ "rooms":[
+ {
+ "roomNumber": 223,
+ "firstName": "Trey",
+ "lastName": "Rust",
+ "email": "trey@getpollen.net"
+ },{
+ "roomNumber": 224,
+ "firstName": "Open",
+ "lastName": "Open",
+ "email": "Open"
+ }
+ ]
+ },
+ {
+ "id": 21,
+ "companyName": "SCRA",
+ "companyLogo": "https://media.licdn.com/dms/image/C4E0BAQGKmfK16a7Qgg/company-logo_200_200/0/1612186187556/scra_logo?e=1706745600&v=beta&t=buyoLIlljsIzisqgFom34jFNM3p3z1wvwP7DMzHushU",
+ "wing": "data wing",
+ "rooms":[
+ {
+ "roomNumber": 225,
+ "firstName": "Cathy",
+ "lastName": "Seraphin",
+ "email": "cathy.seraphin@scra.org"
+ }
+ ]
+ },
+ {
+ "id": 22,
+ "companyName": "American Pledge",
+ "companyLogo": "https://media.licdn.com/dms/image/D560BAQHEX3_xIvWCIQ/company-logo_200_200/0/1686172531689?e=1706745600&v=beta&t=69ZR5PU0yB7qGjPVu-nVvoj1yd3KL0AqT5x1J1IOE7E",
+ "wing": "data wing",
+ "rooms":[
+ {
+ "roomNumber": 226,
+ "firstName": "Robert",
+ "lastName": "Irick",
+ "email": "robert@ampledge.com"
+ }
+ ]
+ },
+ {
+ "id": 23,
+ "companyName": "Hyper63",
+ "companyLogo": "https://blog.hyper.io/content/images/2021/02/logo-whitebg.svg",
+ "wing": "data wing",
+ "rooms":[{
+ "roomNumber": 227,
+ "firstName": "Tom",
+ "lastName": "Wilson",
+ "email": "tom@hyper.io"
+ }
+ ]
+ },
+ {
+ "id": 24,
+ "companyName": "Home-Probe",
+ "companyLogo": "https://www.home-probe.com/hubfs/Home-Probe-logo-full-color.svg",
+ "wing": "data wing",
+ "rooms":[
+ {
+ "roomNumber": 228,
+ "firstName": "Jeff",
+ "lastName": "Luther",
+ "email": "jeff@home-probe.com"
+ }
+ ]
+ },
+ {
+ "id": 25,
+ "companyName": "Blue Bear Financial",
+ "companyLogo": "https://s3.amazonaws.com/static.contentres.com/media/documents/b9c2d21f-bb04-4c21-9e8b-4b86577dd625.png",
+ "wing": "data wing",
+ "rooms":[
+ {"roomNumber": 229,
+ "firstName": "Anthony",
+ "lastName": "Kinzie",
+ "email": "anthony@bluebearfinancial.com"}
+ ]
+ },
+ {
+ "id": 26,
+ "companyName": "Reflection Analytics",
+ "companyLogo": "https://image.pitchbook.com/nxwISGdR29yYSFvuVuIpzom0nvm1691653605090_200x200",
+ "wing": "data wing",
+ "rooms":[
+ {
+ "roomNumber": 230,
+ "firstName": "Jason",
+ "lastName": "Britton",
+ "email": "jbritton@reflection-analytics.com"
+ }
+ ]
+ },
+ {
+ "id": 27,
+ "companyName": "Avid Xchange",
+ "companyLogo": "https://www.avidxchange.com/wp-content/uploads/2020/04/AVIDXCHANGE_Icon.jpg",
+ "wing": "data wing",
+ "rooms":[
+ {"roomNumber": "Reserved Desk",
+ "firstName": "John",
+ "lastName": "Emrich",
+ "email": "jemrich@avidxchange.com"}
+ ]
+ },
+ {
+ "id": 28,
+ "companyName": "Charleston Tidy",
+ "companyLogo": "https://d1hz0qcu1muexe.cloudfront.net/upload/5eb07dae250df516c9192b5a/large/3e1c981400c0cdec284cc5d92fcae538croppedimage.png",
+ "wing": "data wing",
+ "rooms":[
+ {
+ "roomNumber": "Reserved Desk",
+ "firstName": "Trevino",
+ "lastName": "Reid",
+ "email": "charlestontidy@gmail.com"
+ }
+ ]
+ },
+ {
+ "id": 29,
+ "companyName": "Dana Susina",
+ "companyLogo": "https://coursereport-s3-production.global.ssl.fastly.net/uploads/school/logo/402/original/jrs-coding-school-logo.jpg",
+ "wing": "data wing",
+ "rooms":[
+ {
+ "roomNumber": "Reserved Desk",
+ "firstName": "Dana",
+ "lastName": "Susina",
+ "email": "dsusina@gmail.com"
+ }
+ ]
+ },
+ {
+ "id": 30,
+ "companyName": "Azelis",
+ "companyLogo": "https://pbs.twimg.com/profile_images/905766610346156032/SB3QUQBe_400x400.jpg",
+ "wing": "data wing",
+ "rooms":[
+ {
+ "roomNumber": "Reserved Desk",
+ "firstName": "Jilian",
+ "lastName": "Wagner",
+ "email": "jilliansc89@gmail.com"
+ }
+ ]
+ },
+ {
+ "id": 31,
+ "companyName": "SC Council on Competitiveness",
+ "companyLogo": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F11963807%2F10809239707%2F2%2Foriginal.png?w=225&auto=format%2Ccompress&q=75&sharp=10&s=6fafbe3aad1dce0d0d13040feddf5cd8",
+ "wing": "data wing",
+ "rooms":[
+ {
+ "roomNumber": "Reserved Desk",
+ "firstName": "Jaime",
+ "lastName": "Dement",
+ "email": "jdement@sccompetes.org"
+ }
+ ]
+ },
+ {
+ "id": 32,
+ "companyName": "Scalero",
+ "companyLogo": "https://cdn.dribbble.com/users/5984639/screenshots/14879064/scalero_logo_4x.jpg",
+ "wing": "atrium wing",
+ "rooms":[
+ {
+ "roomNumber": 147,
+ "firstName": "Will",
+ "lastName": "Pearson",
+ "email": "will@scalero.io"
+ }
+ ]
+ },
+ {
+ "id": 33,
+ "companyName": "Waddy Fletch",
+ "companyLogo": "https://waddyfletch.com/wp-content/uploads/2019/02/WaddyFletch_Favacon.png",
+ "wing": "atrium wing",
+ "rooms":[
+ {
+ "roomNumber": 148,
+ "firstName": "Keith",
+ "lastName": "Fletcher",
+ "email": "keith@waddyfletch.com"
+ }
+ ]
+ },
+ {
+ "id": 34,
+ "companyName": "Next Level",
+ "companyLogo": "https://media.licdn.com/dms/image/C4E0BAQFr89arQan3uQ/company-logo_200_200/0/1631342921746?e=1707350400&v=beta&t=PT9a-GZp_wtUAMlTR9hzsAAA5ocmGABTGcfXp6pIn08",
+ "wing": "atrium wing",
+ "rooms":[
+ {
+ "roomNumber": 149,
+ "firstName": "Laurie",
+ "lastName": "Marshall",
+ "email": "marshalljltz@gmail.com"
+ }
+ ]
+ },
+ {
+ "id": 35,
+ "companyName": "Apex",
+ "companyLogo": "https://www.apexsystems.com/profiles/apex/themes/apex_bootstrap/images/Apex_logo_horizontal_white.png",
+ "wing": "atrium wing",
+ "rooms":[
+ {
+ "roomNumber": 159,
+ "firstName": "David",
+ "lastName": "Wilkinson",
+ "email": "david.wilkinson@compass-hcm.com"
+ }
+ ]
+ },
+ {
+ "id": 36,
+ "companyName": "Legacy Wealth",
+ "companyLogo": "https://legacywealthholdings.com/wp-content/uploads/2021/04/legacy-wealth-holdings-logo-320x55.png",
+ "wing": "atrium wing",
+ "rooms":[
+ {
+ "roomNumber": 160,
+ "firstName": "Tim",
+ "lastName": "Bratz",
+ "email": "bratz@legacywealthholdings.com"
+ }
+ ]
+ },
+ {
+ "id": 37,
+ "companyName": "Legacy Digital",
+ "companyLogo": "https://media.licdn.com/dms/image/C4E0BAQESg-j5Sd0UlA/company-logo_200_200/0/1672676482985/q_consulting_services_chs_logo?e=1706745600&v=beta&t=5M2c-ZWY2ryb2Nop5vkCtoyHEk1jas-nUMFcVJb3fxU",
+ "wing": "atrium wing",
+ "rooms":[
+ {
+ "roomNumber": 161,
+ "firstName": "Q",
+ "lastName": "Patterson",
+ "email": "q@legacydigital.com"
+ },
+ {
+ "roomNumber": 162,
+ "firstName": "Q",
+ "lastName": "Patterson",
+ "email": "q@legacydigital.com"
+ }
+ ]
+ },
+ {
+ "id": 38,
+ "companyName": "Stag Mountain Properties",
+ "companyLogo": "https://www.stagmtnproperties.com/wp-content/uploads/2022/06/logomark.png",
+ "wing": "atrium wing",
+ "rooms":[
+ {
+ "roomNumber": 163,
+ "firstName": "Nate",
+ "lastName": "Hirschberg",
+ "email": "nate@stagmountainproperties.com"
+ },
+ {
+ "roomNumber": 164,
+ "firstName": "Nate",
+ "lastName": "Hirschberg",
+ "email": "nate@stagmountainproperties.com"
+ }
+ ]
+ },
+ {
+ "id": 39,
+ "companyName": "Pivotal Hires",
+ "companyLogo": "https://pivotalhires.com/wp-content/uploads/2023/01/Pivotal-Hires-Logo-1.jpg",
+ "wing": "atrium wing",
+ "rooms":[{
+ "roomNumber": 165,
+ "firstName": "Open",
+ "lastName": "Open",
+ "email": "ben@pivotalhires.com"
+ }]
+ },
+ {
+ "id": 40,
+ "companyName": "Equitas",
+ "companyLogo": "https://equitas-group.com/wp-content/uploads/EQUITAS-_-BLACK.svg",
+ "wing": "atrium wing",
+ "rooms":[
+ {
+ "roomNumber": 253,
+ "firstName": "Artie",
+ "lastName": "Perry",
+ "email": "artie.perry@equitas-group.com"
+ }
+ ]
+ },
+ {
+ "id": 41,
+ "companyName": "Farther",
+ "companyLogo": "https://assets-global.website-files.com/62ab7e7c514f17b3621fcd73/62f1b7f2fc7a734fcdaa295e_Untitled%20(450%20%C3%97%20225%20px)%20(2).png",
+ "wing": "atrium wing",
+ "rooms":[
+ {
+ "roomNumber": 254,
+ "firstName": "Keith",
+ "lastName": "Sauls",
+ "email": "keith.sauls@farther.com"
+ }
+ ]
+ },
+ {
+ "id": 42,
+ "companyName": "Fink & Asso",
+ "companyLogo": "https://media.licdn.com/dms/image/C4D0BAQHs-WLuKjaDgg/company-logo_200_200/0/1519894617089?e=2147483647&v=beta&t=ycCUzwAdV7BuXBAM-9RZVKVIz89zdV7QHOxW-sfzh3s",
+ "wing": "atrium wing",
+ "rooms":[
+ {
+ "roomNumber": 255,
+ "firstName": "John",
+ "lastName": "Fink",
+ "email": "john@nelligan.com"
+ }
+ ]
+ },
+ {
+ "id": 43,
+ "companyName": "Ward Mungo Construction",
+ "companyLogo": "https://media.licdn.com/dms/image/C4E0BAQGUA0ct0PofKA/company-logo_200_200/0/1661864804516/wmungoconstruction_logo?e=2147483647&v=beta&t=t9Fkoh9Sxhra_1okjxPqwVHy12epYiy6SvfnStuyZ0w",
+ "wing": "atrium wing",
+ "rooms":[
+ {
+ "roomNumber": 256,
+ "firstName": "Ward",
+ "lastName": "Mungo",
+ "email": "wmungo@wardmungoconstruction.com"
+ },{
+ "roomNumber": 257,
+ "firstName": "Ward",
+ "lastName": "Mungo",
+ "email": "wmungo@wardmungoconstruction.com"
+ }
+ ]
+ },
+ {
+ "id": 44,
+ "companyName": "3RBiomed",
+ "companyLogo": "https://coursereport-s3-production.global.ssl.fastly.net/uploads/school/logo/402/original/jrs-coding-school-logo.jpg",
+ "wing": "atrium wing",
+ "rooms":[
+ {
+ "roomNumber": 258,
+ "firstName": "Lode",
+ "lastName": "Debrabandere",
+ "email": "ldebrabandere@3rbiomed.com"
+ }
+ ]
+ },
+ {
+ "id": 45,
+ "companyName": "LyrAssist",
+ "companyLogo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR20u7G4UcO3U_TJZJs4jd4_aBMPvlU9B2v7ZAqzqPV&s",
+ "wing": "atrium wing",
+ "rooms":[
+ {
+ "roomNumber": 259,
+ "firstName": "Bobby",
+ "lastName": "Sumner",
+ "email": "bobbysumnercharleston@gmail.com"
+ }
+ ]
+ },
+ {
+ "id": 46,
+ "companyName": "Zucker Institute by MUSC",
+ "companyLogo": "https://web.musc.edu/-/sm/enterprise/innovation/the-zucker-institute-for-innovation-commercialization/i/zucker-institute-hero.png?h=386&w=1366&la=en&hash=5EE81CBE35009A79FF8370C1B42CAEC4",
+ "wing": "atrium wing",
+ "rooms":[
+ {
+ "roomNumber": 260,
+ "firstName": "Joe",
+ "lastName": "Fiore",
+ "email": "fiorej@musc.edu"
+ }
+ ]
+ },
+ {
+ "id": 47,
+ "companyName": "Branham",
+ "companyLogo": "https://media.licdn.com/dms/image/C4D0BAQHjN1ugTTz9pw/company-logo_200_200/0/1641676463984?e=1706745600&v=beta&t=vETL55xd2XeUw2sUeBKvmuyYomjhYetqXpL1xDU8wZw",
+ "wing": "atrium wing",
+ "rooms":[
+ {
+ "roomNumber": 261,
+ "firstName": "Jarret",
+ "lastName": "Branham",
+ "email": "jarrett@branham-group.com"
+ },
+ {
+ "roomNumber": 262,
+ "firstName": "Open",
+ "lastName": "Open",
+ "email": "Open"
+ }
+ ]
+ },
+ {
+ "id": 48,
+ "companyName": "sweetspot",
+ "companyLogo": "https://media.licdn.com/dms/image/C4D0BAQENVkUjU4PiDg/company-logo_200_200/0/1660147646172/sweetspot_farms_logo?e=1706745600&v=beta&t=8Wtv1jv8TI8Lzp_mY2RVEjZxMrTLqk3RSUKwqBPSB9U",
+ "wing": "atrium wing",
+ "rooms":[
+ {"roomNumber": 265,
+ "firstName": "Carl",
+ "lastName": "Allison",
+ "email": "callison@sweetspotfarms.com"},
+ {
+ "roomNumber": 266,
+ "firstName": "Open",
+ "lastName": "Open",
+ "email": "Open"
+ }
+ ]
+ },
+ {
+ "id": 49,
+ "companyName": "Good Growth Capital",
+ "companyLogo": "//images.squarespace-cdn.com/content/v1/58d10cb146c3c451186c8015/22d04a68-5fe3-4a7f-a0b5-6453e95f3876/logo.png?format=1500w",
+ "wing": "atrium wing",
+ "rooms":[
+ {
+ "roomNumber": 267,
+ "firstName": "John",
+ "lastName": "Osborne",
+ "email": "john@goodgrowthvc.com"
+ }
+ ]
+ },
+ {
+ "id": 50,
+ "companyName": "Global Digital Needs Agency (gdna)",
+ "companyLogo": "https://media.licdn.com/dms/image/D4E0BAQFkv7goi8A7nQ/company-logo_200_200/0/1691471993570?e=2147483647&v=beta&t=9Hmw73ctNDkaHfjKgROzrwfPx4YKpqNmzNIjksI83tU",
+ "wing": "atrium wing",
+ "rooms":[
+ {"roomNumber": 268,
+ "firstName": "Will",
+ "lastName": "Horn",
+ "email": "will@gdna.io"}
+ ]
+ },
+{
+ "id": 51,
+ "companyName": "Querri",
+ "companyLogo": "https://media.licdn.com/dms/image/D560BAQFdUEsUtE4gyw/company-logo_200_200/0/1682685886640?e=1706745600&v=beta&t=YjmD4Sqf_8fUUokSw3NBW5YrpvZB6cCY9IY4LPUiEPY",
+ "wing": "atrium wing",
+ "rooms":[{
+ "roomNumber": 269,
+ "firstName": "Dave",
+ "lastName": "Ingram",
+ "email": "dave@querri.com"
+ }]
+},
+{
+ "id": 52,
+ "companyName": "Moon Dog",
+ "companyLogo": "https://cdn.8thwall.com/apps/cover/2izn0koak0a7ec39v0xy3r6gq0nqvfg33uujcguqy7qbv55tucsng7s3-preview-1200x630",
+ "wing": "atrium wing",
+ "rooms":[
+ {
+ "roomNumber": 270,
+ "firstName": "Ben",
+ "lastName": "Davis",
+ "email": "ben@moondoganimation.com"
+ },
+ {
+ "roomNumber": 271,
+ "firstName": "Open",
+ "lastName": "Open",
+ "email": "Open"
+ }
+ ]
+},
+{
+ "id": 53,
+ "companyName": "RootLoud",
+ "companyLogo": "https://media.licdn.com/dms/image/D4E0BAQEGdqaz3BtH4w/company-logo_200_200/0/1665436313127?e=2147483647&v=beta&t=WqBAxjAnviSVlOE_H5Iha8AQym16KyIJmaXCpdiFRvs",
+ "wing": "atrium wing",
+ "rooms":[
+ {
+ "roomNumber": 272,
+ "firstName": "Mitch",
+ "lastName": "Smith",
+ "email": "mitch@rootloud.com"
+ },
+ {
+ "roomNumber": 273,
+ "firstName": "Open",
+ "lastName": "Open",
+ "email": "Open"
+ }
+ ]
+},
+{
+ "id": 54,
+ "companyName": "RBJ Financial",
+ "companyLogo": "https://rbjfinancial.com/wp-content/uploads/2022/03/RBJ_ModifiedParthenonTextured.png",
+ "wing": "mall",
+ "rooms":[
+{
+ "roomNumber": "mall",
+ "firstName": "Bo",
+ "lastName": "Yoder",
+ "email": "boyoder@gmail.com"
+}
+ ]
+},
+{
+ "id": 55,
+ "companyName": "Mad Lad Films",
+ "companyLogo": "https://madladfilms.com/wp-content/uploads/2022/04/madland_films.png",
+ "wing": "mall",
+ "rooms":[
+ { "roomNumber": "mall",
+ "firstName": "Ethan",
+ "lastName": "Kaiser",
+ "email": "madladfilms@gmail.com"}
+ ]
+},
+{
+ "id": 56,
+ "companyName": "SE Chamber of Commerce",
+ "companyLogo": "https://southeasternchamber.org/graphics/ThemeA/Chamber/img/logo2.png",
+ "wing": "atrium wing",
+ "rooms":[
+ {
+ "roomNumber": "mall",
+ "firstName": "Henry",
+ "lastName": "Ravenel",
+ "email": "ceo@southeasternchamber.org"
+ }
+ ]
+},
+{
+ "id": 57,
+ "companyName": "Community Solutions",
+ "companyLogo": "https://static.wixstatic.com/media/dbdd60_b5cfcb9741a4419e8672222e9c701563~mv2.png/v1/crop/x_84,y_0,w_340,h_323/fill/w_256,h_243,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/CSC%2520logo_edited.png",
+ "wing": "atrium wing",
+ "rooms":[
+ {"roomNumber": "mall",
+ "firstName": "Eric",
+ "lastName": "Jackson",
+ "email": "ejackson33.ej@gmail.com"}
+ ]
+},
+{
+ "id": 58,
+ "companyName": "Comet",
+ "companyLogo": "https://coursereport-s3-production.global.ssl.fastly.net/uploads/school/logo/402/original/jrs-coding-school-logo.jpg",
+ "wing": "atrium wing",
+ "rooms":[
+ {
+ "roomNumber": "mall",
+ "firstName": "Craig",
+ "lastName": "Thompson",
+ "email": "craigt@cometpm.com"
+ }
+ ]
+},
+{
+ "id": 59,
+ "companyName": "Paul Barbeau Real Estate",
+ "companyLogo": "https://media.licdn.com/dms/image/D5603AQH1EcLL1Ku7CA/profile-displayphoto-shrink_400_400/0/1682629633342?e=1704931200&v=beta&t=w_5OYSlaJoNMOgPxElCjnHkPhfxpogSBerJmBU7tp1A",
+ "wing": "data wing",
+ "rooms":[{
+ "roomNumber": "Reserved Desk",
+ "firstName": "Paul",
+ "lastName": "Barbeau",
+ "email": "paul.barbeau01@gmail.com" 
+ }]
+},
+{
+ "id": 60,
+ "companyName": "TruDataRx" ,
+ "companyLogo": "https://s3-us-west-2.amazonaws.com/cbi-image-service-prd/modified/de6ae526-87d5-4d69-ab51-115bf6c34940.png", 
+ "wing": "data wing",
+ "rooms":[{
+ "roomNumber": "Reserved Desk",
+ "firstName": "Justin",
+ "lastName": "Backstrom",
+ "email": "jusbackstrom@gmail.com" 
+ }]
+}
+]
+ };
+
+ // Create HTML structure from JSON data
+ buildingData.companies.forEach(function (company) {
+ document.write('<div class="company">');
+ document.write('<h2>' + company.companyName + '</h2>');
+ document.write('<img src="' + company.companyLogo + '" alt="' + company.comapnyName + ' Logo" style="max-width: 100px;">');
+ document.write('<p>Wing: ' + company.wing + '</p>');
+ 
+ company.rooms.forEach(function (room) {
+ document.write('<div class="resident">');
+ document.write('<h2>Room ' + room.roomNumber + '</h2>');
+ 
+ document.write('Resident: ' + room.firstName + ' ')
+ 
+ document.write(room.lastName +'<p/>')
+ document.write('Email: '+room.email)
+
+ document.write('</div>');
+ });
+
+ document.write('</div>');
+ });
+</script>
+
+</body>
+</html>
+
